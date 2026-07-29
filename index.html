@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis XV Años - Liz Gissele</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Montserrat:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Pinyon+Script&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta Premium Editorial (Colores sólidos y elegantes) */
-            --mint: #e0efe8;
-            --mint-dark: #b5d1c2;
+            /* Paleta Premium Más Vibrante */
+            --mint: #a8ebd1; /* Menta vibrante pero elegante */
+            --mint-dark: #81cbb0;
             
-            --pink: #f5e6e8;
-            --pink-dark: #d9b8bd;
+            --pink: #ffd1dc; /* Rosa pastel con más color */
+            --pink-dark: #e6a8b7;
             
-            --gold: #c5a059;
+            --gold: #d4af37; /* Dorado rico y sólido */
+            --gold-light: #f3e5ab;
             
             --bg-light: #fcfcfc;
-            --text-dark: #333333;
-            --text-muted: #666666;
-            --black-theme: #1a1a1a;
+            --bg-dark: #1a1a1a;
+            
+            --text-dark: #2c2c2c;
+            --text-muted: #5e5e5e;
+            
+            --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         * {
@@ -37,11 +41,11 @@
             scroll-behavior: smooth;
         }
 
-        /* --- SOBRE MINIMALISTA --- */
+        /* --- PANTALLA INICIAL DEL SOBRE --- */
         #envelope-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--mint);
-            z-index: 1000; display: flex; justify-content: center; align-items: center;
+            background-color: var(--pink); /* Fondo rosa pastel vibrante */
+            z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 1s ease-in-out, visibility 1s;
         }
 
@@ -49,60 +53,81 @@
             opacity: 0; visibility: hidden; pointer-events: none;
         }
 
+        .envelope-text-container {
+            text-align: center; margin-bottom: 40px;
+            animation: floatText 3s ease-in-out infinite;
+        }
+
+        .env-tag {
+            font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 6px;
+            text-transform: uppercase; color: var(--text-dark); font-weight: 600;
+        }
+
+        .env-title {
+            font-family: 'Pinyon Script', cursive; font-size: 85px;
+            color: var(--gold); line-height: 1; text-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            margin-top: 10px;
+        }
+
         .envelope-wrapper {
-            position: relative; cursor: pointer; transition: transform 0.5s ease;
+            position: relative; cursor: pointer; transition: transform 0.5s var(--transition-smooth);
+            transform: scale(1.05);
         }
         
-        .envelope-wrapper:hover { transform: translateY(-5px); }
+        .envelope-wrapper:hover { transform: scale(1.1) translateY(-5px); }
 
         .envelope {
-            position: relative; width: 320px; height: 220px;
-            background-color: var(--pink); border: 1px solid var(--gold);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+            position: relative; width: 340px; height: 230px;
+            background-color: var(--mint); border-radius: 4px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1); border: 2px solid #fff;
         }
 
         .envelope::before {
             content: ''; position: absolute; top: 0; right: 0;
-            border-right: 160px solid #ecdadd; border-top: 110px solid transparent;
-            border-bottom: 110px solid #ecdadd; z-index: 2;
+            border-right: 170px solid var(--mint-dark); border-top: 115px solid transparent;
+            border-bottom: 115px solid var(--mint-dark); z-index: 2; opacity: 0.7;
+            border-bottom-right-radius: 4px;
         }
         
         .envelope::after {
             content: ''; position: absolute; top: 0; left: 0;
-            border-left: 160px solid #e8d3d7; border-top: 110px solid transparent;
-            border-bottom: 110px solid #e8d3d7; z-index: 2;
+            border-left: 170px solid var(--mint-dark); border-top: 115px solid transparent;
+            border-bottom: 115px solid var(--mint-dark); z-index: 2; opacity: 0.9;
+            border-bottom-left-radius: 4px;
         }
 
         .front-flap {
             position: absolute; top: 0; left: 0;
-            border-left: 160px solid transparent; border-right: 160px solid transparent;
-            border-top: 120px solid var(--pink-dark); transform-origin: top;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); z-index: 4;
+            border-left: 170px solid transparent; border-right: 170px solid transparent;
+            border-top: 125px solid #ffffff; transform-origin: top;
+            transition: transform 0.8s var(--transition-smooth); z-index: 4;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.05));
         }
 
         .envelope-wrapper.open .front-flap { transform: rotateX(180deg); z-index: 1; }
 
         .wax-seal {
             position: absolute; top: 95px; left: 50%; transform: translateX(-50%);
-            width: 50px; height: 50px; background-color: var(--gold);
+            width: 60px; height: 60px; background-color: var(--gold);
             border-radius: 50%; z-index: 5; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: opacity 0.3s ease 0.3s;
+            box-shadow: 0 8px 20px rgba(212,175,55,0.4), inset 0 0 10px rgba(255,255,255,0.4); 
+            transition: opacity 0.4s ease 0.2s, transform 0.4s ease;
         }
         
-        .wax-seal svg { width: 24px; height: 24px; fill: #fff; }
-        .envelope-wrapper.open .wax-seal { opacity: 0; pointer-events: none; }
+        .wax-seal svg { width: 30px; height: 30px; fill: #fff; }
+        .envelope-wrapper.open .wax-seal { opacity: 0; transform: translateX(-50%) scale(0); pointer-events: none; }
 
         .hint-text {
-            position: absolute; bottom: -40px; width: 100%; text-align: center;
-            font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
-            color: var(--text-muted); animation: pulse 2.5s infinite;
+            text-align: center; font-size: 13px; font-weight: 500; text-transform: uppercase; 
+            letter-spacing: 3px; color: var(--text-dark); margin-top: 40px; 
+            animation: pulse 2s infinite; background: rgba(255,255,255,0.5); 
+            padding: 8px 20px; border-radius: 20px; display: inline-block;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; }
-        }
+        @keyframes pulse { 0% { opacity: 0.5; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1); } 100% { opacity: 0.5; transform: scale(0.98); } }
+        @keyframes floatText { 0% { transform: translateY(0); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0); } }
 
-        /* --- CONTENIDO PRINCIPAL --- */
+        /* --- CONTENIDO PRINCIPAL Y ANIMACIONES ESCALONADAS --- */
         #main-invitation {
             display: none; width: 100%; flex-direction: column; align-items: center;
             opacity: 0; animation: fadeInMain 1.5s forwards 0.5s;
@@ -112,384 +137,382 @@
 
         @keyframes fadeInMain { to { opacity: 1; } }
 
-        /* Estructura de Secciones (Alto Diseño) */
+        /* Clases de Animación */
+        .anim-element { opacity: 0; transition: all 1s var(--transition-smooth); }
+        
+        .anim-fade-up { transform: translateY(50px); }
+        .anim-fade-up.in-view { opacity: 1; transform: translateY(0); }
+        
+        .anim-zoom { transform: scale(0.85); }
+        .anim-zoom.in-view { opacity: 1; transform: scale(1); }
+        
+        .anim-slide-right { transform: translateX(-50px); }
+        .anim-slide-right.in-view { opacity: 1; transform: translateX(0); }
+
+        /* Delays para efecto cascada (stagger) */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.3s; }
+        .delay-3 { transition-delay: 0.5s; }
+        .delay-4 { transition-delay: 0.7s; }
+
+        /* Estructura de Secciones */
         .section-block {
-            width: 100%; padding: 80px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;
+            width: 100%; padding: 100px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;
+            position: relative; overflow: hidden;
         }
 
+        .bg-white { background-color: #ffffff; }
         .bg-mint { background-color: var(--mint); }
         .bg-pink { background-color: var(--pink); }
-        .bg-white { background-color: #ffffff; }
-        .bg-black { background-color: var(--black-theme); color: #ffffff; }
+        .bg-black { background-color: var(--bg-dark); color: #ffffff; }
 
         /* Tipografía Editorial */
         .tag-line {
-            font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 4px;
-            text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
+            font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 5px;
+            text-transform: uppercase; color: var(--gold); margin-bottom: 25px; font-weight: 600;
         }
 
         .title-script {
-            font-family: 'Pinyon Script', cursive; font-size: 70px;
-            color: var(--text-dark); margin-bottom: 30px; line-height: 1; font-weight: 400;
+            font-family: 'Pinyon Script', cursive; font-size: 80px;
+            color: var(--text-dark); margin-bottom: 20px; line-height: 1.1; font-weight: 400;
         }
 
         .body-serif {
-            font-family: 'Cormorant Garamond', serif; font-size: 22px;
-            line-height: 1.5; color: var(--text-muted); font-style: italic;
-            max-width: 600px; padding: 0 15px;
+            font-family: 'Cormorant Garamond', serif; font-size: 24px;
+            line-height: 1.6; color: var(--text-muted); font-style: italic;
+            max-width: 600px; padding: 0 15px; font-weight: 500;
         }
 
         .bg-black .title-script, .bg-black .body-serif { color: #ffffff; }
 
-        .line-divider {
-            width: 1px; height: 50px; background-color: var(--gold); margin: 30px auto;
-        }
-
-        .line-horizontal {
-            width: 60px; height: 1px; background-color: var(--gold); margin: 30px auto;
-        }
+        .line-divider { width: 2px; height: 60px; background-color: var(--gold); margin: 30px auto; }
+        .line-horizontal { width: 80px; height: 2px; background-color: var(--gold); margin: 35px auto; }
 
         /* Imágenes */
         .photo-frame {
-            width: 100%; max-width: 400px; border: 1px solid var(--gold);
-            padding: 8px; background: #fff; margin: 30px 0;
+            width: 100%; max-width: 400px; border: 15px solid #fff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); margin: 40px 0; border-radius: 4px;
+            transform: rotate(-2deg); transition: transform 0.4s ease;
         }
-        
-        .photo-frame img {
-            width: 100%; display: block; filter: contrast(1.05) saturate(0.95);
-        }
+        .photo-frame:hover { transform: rotate(0deg) scale(1.02); }
+        .photo-frame img { width: 100%; display: block; filter: contrast(1.1) saturate(1.1); }
 
         /* Información Textual */
         .info-title {
-            font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 3px;
-            text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+            font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 4px;
+            text-transform: uppercase; color: var(--gold); margin-bottom: 15px; font-weight: 700;
         }
 
         .info-data {
-            font-family: 'Cormorant Garamond', serif; font-size: 28px;
-            color: var(--text-dark); margin-bottom: 5px;
+            font-family: 'Cormorant Garamond', serif; font-size: 32px;
+            color: var(--text-dark); margin-bottom: 5px; font-weight: 600; line-height: 1.3;
         }
 
         .bg-black .info-data { color: #ffffff; }
 
-        /* Botones Minimalistas */
+        /* Botones Premium */
         .btn-solid {
             display: inline-block; background-color: var(--gold); color: #fff;
-            padding: 16px 35px; font-family: 'Montserrat', sans-serif; font-size: 12px;
-            font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
-            text-decoration: none; border: none; cursor: pointer; transition: background 0.3s;
-            margin-top: 20px;
+            padding: 18px 40px; font-family: 'Montserrat', sans-serif; font-size: 13px;
+            font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+            text-decoration: none; border: none; cursor: pointer; border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(212,175,55,0.4);
+            transition: all 0.3s var(--transition-smooth); margin-top: 30px;
         }
         
-        .btn-solid:hover { background-color: #b08d4a; }
+        .btn-solid:hover { background-color: #bfa035; transform: translateY(-5px); box-shadow: 0 15px 35px rgba(212,175,55,0.6); }
 
-        /* Widget de Calendario Mejorado y Responsivo */
+        /* Widget de Calendario Ultra Responsivo */
         .calendar-wrapper {
-            width: 100%; max-width: 320px; margin: 30px auto; padding: 25px 15px;
-            background: #fff; border: 1px solid #eaeaea; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-            box-sizing: border-box;
+            width: 100%; max-width: 350px; margin: 40px auto; padding: 30px 20px;
+            background: #fff; border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            box-sizing: border-box; border: 2px solid var(--mint-dark);
         }
 
         .calendar-month {
-            font-family: 'Cinzel', serif; font-size: 18px; color: var(--text-dark);
-            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;
+            font-family: 'Cinzel', serif; font-size: 22px; color: var(--gold);
+            text-transform: uppercase; letter-spacing: 3px; margin-bottom: 25px; font-weight: 700;
         }
 
         .calendar-grid {
-            display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
             width: 100%; box-sizing: border-box;
         }
 
         .cal-header {
-            font-family: 'Montserrat', sans-serif; font-size: clamp(10px, 3vw, 12px);
-            font-weight: 500; color: var(--gold); padding-bottom: 10px;
+            font-family: 'Montserrat', sans-serif; font-size: clamp(11px, 3.5vw, 13px);
+            font-weight: 600; color: var(--pink-dark); padding-bottom: 10px;
         }
 
         .cal-day {
-            font-family: 'Cormorant Garamond', serif; font-size: clamp(14px, 4vw, 18px);
-            color: var(--text-muted); display: flex; justify-content: center; align-items: center;
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(15px, 4.5vw, 20px);
+            font-weight: 600; color: var(--text-dark); display: flex; justify-content: center; align-items: center;
             aspect-ratio: 1;
         }
 
         .cal-day.active {
-            background-color: var(--gold); color: #fff; border-radius: 50%; font-weight: 600;
+            background-color: var(--gold); color: #fff; border-radius: 50%; 
+            box-shadow: 0 5px 15px rgba(212,175,55,0.4); transform: scale(1.1);
         }
 
         /* Mapas */
         .map-box {
-            width: 100%; max-width: 500px; height: 300px; margin: 25px auto;
-            border: 1px solid var(--gold); padding: 5px; background: #fff;
+            width: 100%; max-width: 600px; height: 350px; margin: 30px auto;
+            border-radius: 12px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: 4px solid #fff;
         }
         
-        .map-box iframe { width: 100%; height: 100%; border: none; filter: grayscale(30%); }
+        .map-box iframe { width: 100%; height: 100%; border: none; filter: contrast(1.1); }
 
-        /* Formularios */
-        .form-group {
-            width: 100%; max-width: 400px; margin: 0 auto 15px auto;
-        }
-
+        /* Formularios RSVP */
+        .form-group { width: 100%; max-width: 450px; margin: 0 auto 20px auto; }
+        
         .input-line {
-            width: 100%; padding: 15px 0; background: transparent; border: none;
-            border-bottom: 1px solid var(--gold); color: var(--text-dark);
-            font-family: 'Cormorant Garamond', serif; font-size: 18px; outline: none;
-            text-align: center;
+            width: 100%; padding: 20px 0; background: transparent; border: none;
+            border-bottom: 2px solid var(--gold); color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 500; outline: none;
+            text-align: center; transition: border-color 0.3s;
         }
-
-        .input-line::placeholder { color: #aaa; font-style: italic; }
+        .input-line:focus { border-bottom-color: var(--mint-dark); }
+        .input-line::placeholder { color: #999; font-style: normal; font-weight: 400; }
         
-        textarea.input-line { resize: vertical; min-height: 80px; }
-        
-        select.input-line {
-            appearance: none; -webkit-appearance: none; text-align-last: center;
-            cursor: pointer;
-        }
+        textarea.input-line { resize: vertical; min-height: 100px; }
+        select.input-line { appearance: none; text-align-last: center; cursor: pointer; }
 
-        /* Boleto Pase VIP */
+        /* Boleto Pase VIP - Alto Diseño */
         .ticket-card {
-            width: 100%; max-width: 320px; margin: 20px auto; border: 1px solid var(--gold);
-            padding: 30px 20px; background-color: var(--bg-light);
-            position: relative; text-align: center;
+            width: 100%; max-width: 360px; margin: 30px auto; background-color: #fff;
+            padding: 40px 20px; position: relative; text-align: center;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-top: 8px solid var(--gold);
         }
 
         .ticket-card::before, .ticket-card::after {
-            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
-            width: 20px; height: 20px; background-color: var(--pink); border-radius: 50%;
-            border: 1px solid var(--gold);
+            content: ''; position: absolute; top: 60%; transform: translateY(-50%);
+            width: 30px; height: 30px; background-color: var(--pink); border-radius: 50%;
         }
-        
-        .ticket-card::before { left: -11px; border-left-color: transparent; border-top-color: transparent; border-bottom-color: transparent; }
-        .ticket-card::after { right: -11px; border-right-color: transparent; border-top-color: transparent; border-bottom-color: transparent; }
+        .ticket-card::before { left: -15px; }
+        .ticket-card::after { right: -15px; }
 
-        /* Animaciones de Scroll */
-        .animate-up {
-            opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .animate-up.in-view { opacity: 1; transform: translateY(0); }
-
-        /* Medias Queries (Móviles pequeños) */
-        @media (max-width: 380px) {
-            .title-script { font-size: 55px; }
-            .section-block { padding: 60px 15px; }
-            .info-data { font-size: 24px; }
-            .map-box { height: 250px; }
+        /* Responsive Móvil */
+        @media (max-width: 400px) {
+            .env-title { font-size: 65px; }
+            .title-script { font-size: 60px; }
+            .section-block { padding: 70px 15px; }
+            .info-data { font-size: 26px; }
+            .map-box { height: 280px; }
+            .btn-solid { padding: 16px 30px; font-size: 12px; }
+            .envelope { width: 300px; height: 200px; }
+            .envelope::before, .envelope::after { border-left-width: 150px; border-right-width: 150px; border-top-width: 100px; border-bottom-width: 100px; }
+            .front-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 110px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla del Sobre -->
+    <!-- PANTALLA INICIAL DEL SOBRE -->
     <div id="envelope-screen">
+        <div class="envelope-text-container">
+            <div class="env-tag">Mis XV Años</div>
+            <h1 class="env-title">Liz Gissele</h1>
+        </div>
+
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="front-flap"></div>
             <div class="wax-seal">
                 <svg viewBox="0 0 24 24"><path d="M12 2L15 9H22L16.5 13.5L18.5 21L12 17L5.5 21L7.5 13.5L2 9H9L12 2Z"/></svg>
             </div>
             <div class="envelope"></div>
-            <div class="hint-text">Abrir Invitación</div>
         </div>
+        
+        <div class="hint-text">Toca el sello para abrir</div>
     </div>
 
-    <!-- Contenido Principal -->
+    <!-- CONTENIDO PRINCIPAL -->
     <main id="main-invitation">
         
         <!-- Portada -->
         <section class="section-block bg-white">
-            <div class="animate-up">
-                <div class="tag-line">Mis XV Años</div>
-                <h1 class="title-script">Liz Gissele</h1>
-                <div class="line-divider"></div>
-                <p class="body-serif">
-                    "Hoy celebro el inicio de una nueva etapa, agradeciendo a Dios por la vida y a mi familia por acompañarme en cada paso del camino."
-                </p>
-                <!-- Opcional: Reemplaza con una foto real -->
-                <div class="photo-frame">
-                    <img src="assets/foto1.jpg" alt="Liz Gissele" onerror="this.style.display='none'">
-                </div>
+            <div class="anim-element anim-fade-up delay-1 tag-line">Mis XV Años</div>
+            <h1 class="anim-element anim-zoom delay-2 title-script">Liz Gissele</h1>
+            <div class="anim-element anim-fade-up delay-3 line-divider"></div>
+            <p class="anim-element anim-fade-up delay-4 body-serif">
+                "Hoy celebro el inicio de una nueva etapa, agradeciendo a Dios por la vida y a mi familia por acompañarme en cada paso del camino."
+            </p>
+            <div class="anim-element anim-zoom delay-4 photo-frame">
+                <img src="assets/foto1.jpg" alt="Liz Gissele" onerror="this.style.display='none'">
             </div>
         </section>
 
         <!-- Fecha y Calendario -->
         <section class="section-block bg-mint">
-            <div class="animate-up">
-                <div class="info-title">Celebremos el</div>
-                <div class="info-data" style="font-size: 34px;">11 de Noviembre</div>
-                <div class="info-data" style="font-size: 20px; color: var(--gold);">2026</div>
+            <div class="anim-element anim-slide-right delay-1 info-title">Celebremos el</div>
+            <div class="anim-element anim-slide-right delay-2 info-data" style="font-size: 40px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.1);">11 de Noviembre</div>
+            <div class="anim-element anim-slide-right delay-3 info-data" style="font-size: 24px; color: var(--gold);">2026</div>
 
-                <div class="calendar-wrapper">
-                    <div class="calendar-month">Noviembre</div>
-                    <div class="calendar-grid">
-                        <div class="cal-header">D</div><div class="cal-header">L</div><div class="cal-header">M</div><div class="cal-header">M</div><div class="cal-header">J</div><div class="cal-header">V</div><div class="cal-header">S</div>
-                        
-                        <!-- 1 de Noviembre 2026 es Domingo -->
-                        <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
-                        <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day active">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div>
-                        <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
-                        <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
-                        <div class="cal-day">29</div><div class="cal-day">30</div><div></div><div></div><div></div><div></div><div></div>
-                    </div>
+            <div class="anim-element anim-zoom delay-4 calendar-wrapper">
+                <div class="calendar-month">Noviembre</div>
+                <div class="calendar-grid">
+                    <div class="cal-header">D</div><div class="cal-header">L</div><div class="cal-header">M</div><div class="cal-header">M</div><div class="cal-header">J</div><div class="cal-header">V</div><div class="cal-header">S</div>
+                    
+                    <!-- 1 de Noviembre 2026 es Domingo -->
+                    <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+                    <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day active">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div>
+                    <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
+                    <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
+                    <div class="cal-day">29</div><div class="cal-day">30</div><div></div><div></div><div></div><div></div><div></div>
                 </div>
-
-                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+A%C3%B1os+de+Liz+Gissele&dates=20261111T230000Z/20261112T070000Z&details=Celebremos+juntos+este+d%C3%ADa+tan+especial" target="_blank" class="btn-solid">Agendar Evento</a>
             </div>
+
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+A%C3%B1os+de+Liz+Gissele&dates=20261111T230000Z/20261112T070000Z&details=Celebremos+juntos+este+d%C3%ADa+tan+especial" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Agendar Evento</a>
         </section>
 
-        <!-- Padres y Padrinos -->
+        <!-- Familia -->
         <section class="section-block bg-white">
-            <div class="animate-up">
-                <div class="info-title">Con el amor de mis padres</div>
-                <div class="info-data">Jackeline Gissele Beltrán González</div>
-                <div style="font-family: 'Cinzel', serif; color: var(--gold); margin: 10px 0;">&</div>
-                <div class="info-data">Raúl Adrián Hernández Urbina</div>
-                
-                <div class="line-horizontal"></div>
-                
-                <div class="info-title">Y mis Padrinos</div>
-                <div class="info-data" style="font-size: 24px;">Karla Hidalgo y Edgar Beltrán</div>
-                <div class="info-data" style="font-size: 24px;">Brenda Beltrán y Miguel Morales</div>
-            </div>
+            <div class="anim-element anim-fade-up delay-1 info-title">Con el amor de mis padres</div>
+            <div class="anim-element anim-fade-up delay-2 info-data">Jackeline Gissele Beltrán González</div>
+            <div class="anim-element anim-fade-up delay-3" style="font-family: 'Cinzel', serif; font-size: 24px; color: var(--gold); margin: 15px 0;">&</div>
+            <div class="anim-element anim-fade-up delay-3 info-data">Raúl Adrián Hernández Urbina</div>
+            
+            <div class="anim-element anim-zoom delay-4 line-horizontal"></div>
+            
+            <div class="anim-element anim-fade-up delay-4 info-title">Y mis Padrinos</div>
+            <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 26px;">Karla Hidalgo y Edgar Beltrán</div>
+            <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 26px;">Brenda Beltrán y Miguel Morales</div>
         </section>
 
         <!-- Ubicaciones -->
         <section class="section-block bg-pink">
-            <div class="animate-up" style="width: 100%;">
-                <div class="info-title">Ceremonia Religiosa</div>
-                <div class="info-data">Parroquia San Jerónimo</div>
-                <div class="tag-line" style="font-size: 16px; margin: 10px 0;">7:00 p.m.</div>
-                
-                <div class="map-box">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3595.530668723629!2d-100.369185!3d25.686848299999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86629616f3bfaf1f%3A0xefa6ceeb665a49a2!2sParroquia%20de%20San%20Jeronimo%20De%20Monterrey!5e0!3m2!1ses-419!2smx!4v1785287091864!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-                </div>
-                <a href="https://maps.app.goo.gl/JTeAo6S6JpxYemYX7?g_st=ic" target="_blank" class="btn-solid">Ver Mapa</a>
-
-                <div class="line-horizontal" style="margin: 50px auto;"></div>
-
-                <div class="info-title">Recepción</div>
-                <div class="info-data">Capitolio</div>
-                <div class="tag-line" style="font-size: 16px; margin: 10px 0;">8:00 p.m.</div>
-                
-                <div class="map-box">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.02882735267!2d-100.34333529999999!3d25.6703391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662be03c5afd347%3A0xaa2a8120f2fae847!2sCapitolio!5e0!3m2!1ses-419!2smx!4v1785287167843!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-                </div>
-                <a href="https://maps.app.goo.gl/iziyjCoH5wsyaYW6A?g_st=ic" target="_blank" class="btn-solid">Ver Mapa</a>
+            <div class="anim-element anim-slide-right delay-1 info-title">Ceremonia Religiosa</div>
+            <div class="anim-element anim-slide-right delay-2 info-data">Parroquia San Jerónimo</div>
+            <div class="anim-element anim-slide-right delay-3 tag-line" style="font-size: 18px; margin: 15px 0; color: #fff;">7:00 p.m.</div>
+            
+            <div class="anim-element anim-zoom delay-4 map-box">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3595.530668723629!2d-100.369185!3d25.686848299999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86629616f3bfaf1f%3A0xefa6ceeb665a49a2!2sParroquia%20de%20San%20Jeronimo%20De%20Monterrey!5e0!3m2!1ses-419!2smx!4v1785287091864!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
+            <a href="https://maps.app.goo.gl/JTeAo6S6JpxYemYX7?g_st=ic" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Ver Mapa y Ruta</a>
+
+            <div class="anim-element anim-zoom line-horizontal" style="margin: 60px auto; background-color: #fff;"></div>
+
+            <div class="anim-element anim-slide-right delay-1 info-title">Recepción</div>
+            <div class="anim-element anim-slide-right delay-2 info-data">Capitolio</div>
+            <div class="anim-element anim-slide-right delay-3 tag-line" style="font-size: 18px; margin: 15px 0; color: #fff;">8:00 p.m.</div>
+            
+            <div class="anim-element anim-zoom delay-4 map-box">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.02882735267!2d-100.34333529999999!3d25.6703391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662be03c5afd347%3A0xaa2a8120f2fae847!2sCapitolio!5e0!3m2!1ses-419!2smx!4v1785287167843!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <a href="https://maps.app.goo.gl/iziyjCoH5wsyaYW6A?g_st=ic" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Ver Mapa y Ruta</a>
         </section>
 
-        <!-- Código de Vestimenta -->
+        <!-- Dress Code -->
         <section class="section-block bg-black">
-            <div class="animate-up">
-                <div class="info-title">Dress Code</div>
-                <div class="info-data" style="font-family: 'Cinzel', serif; font-size: 36px; margin: 20px 0; letter-spacing: 5px;">
-                    TOTAL BLACK<br>ATTIRE
-                </div>
-                <div class="line-divider" style="background-color: #333; height: 30px;"></div>
-                <p class="body-serif" style="color: #ccc; font-size: 18px;">
-                    Para mantener la elegancia y estética de la noche, se solicita asistir exclusivamente vistiendo de color negro.
-                </p>
+            <div class="anim-element anim-fade-up delay-1 info-title">Código de Vestimenta</div>
+            <div class="anim-element anim-zoom delay-2 info-data" style="font-family: 'Cinzel', serif; font-size: 42px; margin: 25px 0; letter-spacing: 6px; color: var(--gold);">
+                TOTAL BLACK<br>ATTIRE
             </div>
+            <div class="anim-element anim-fade-up delay-3 line-divider" style="background-color: #444; height: 40px;"></div>
+            <p class="anim-element anim-fade-up delay-4 body-serif" style="color: #ddd; font-size: 20px;">
+                Para mantener la elegancia y estética de la noche, se solicita asistir exclusivamente vistiendo de color negro.
+            </p>
         </section>
 
         <!-- Mesa de Regalos -->
         <section class="section-block bg-white">
-            <div class="animate-up">
-                <div class="info-title">Mesa de Regalos</div>
-                <svg viewBox="0 0 24 24" style="width: 40px; height: 40px; fill: var(--gold); margin: 10px 0;">
-                    <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                </svg>
-                <div class="info-data">Lluvia de Sobres</div>
-                <p class="body-serif" style="margin-top: 15px; font-size: 19px;">
-                    El obsequio más hermoso es tu presencia. Si deseas tener un detalle adicional, habrá un buzón en la recepción para tu obsequio en efectivo.
-                </p>
-            </div>
+            <div class="anim-element anim-slide-right delay-1 info-title">Mesa de Regalos</div>
+            <svg class="anim-element anim-zoom delay-2" viewBox="0 0 24 24" style="width: 50px; height: 50px; fill: var(--gold); margin: 15px 0;">
+                <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 38px;">Lluvia de Sobres</div>
+            <p class="anim-element anim-fade-up delay-4 body-serif" style="margin-top: 20px;">
+                El obsequio más hermoso es tu presencia. Si deseas tener un detalle adicional, habrá un buzón en la recepción para tu obsequio en efectivo.
+            </p>
         </section>
 
         <!-- Playlist -->
         <section class="section-block bg-mint">
-            <div class="animate-up" style="width: 100%; max-width: 500px;">
-                <div class="info-title">Música</div>
-                <div class="info-data">Nuestra Playlist</div>
-                <p class="body-serif" style="margin: 15px auto 30px auto; font-size: 19px;">
-                    Ayúdame a crear el ambiente perfecto agregando tus canciones favoritas para la pista de baile.
-                </p>
-                
-                <iframe style="border-radius:0; border: 1px solid var(--gold); background: #fff; padding: 5px;" src="https://open.spotify.com/embed/playlist/0mbH27y41OCCrqrNLdcqxa?utm_source=generator&si=084ad28c94604d23" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                
-                <a href="https://open.spotify.com/playlist/0mbH27y41OCCrqrNLdcqxa?si=bd21705dc61c435e&pt=1ef58d22f663a77644dc5d0976725272" target="_blank" class="btn-solid" style="margin-top: 25px;">Agregar Canciones</a>
+            <div class="anim-element anim-fade-up delay-1 info-title">Música</div>
+            <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 38px; color: #fff;">Nuestra Playlist</div>
+            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 20px auto 40px auto; color: var(--text-dark);">
+                Ayúdame a crear el ambiente perfecto agregando tus canciones favoritas para la pista de baile.
+            </p>
+            
+            <div class="anim-element anim-zoom delay-4" style="width: 100%; max-width: 500px;">
+                <iframe style="border-radius: 12px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); border: 4px solid #fff;" src="https://open.spotify.com/embed/playlist/0mbH27y41OCCrqrNLdcqxa?utm_source=generator&si=084ad28c94604d23" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
+            
+            <a href="https://open.spotify.com/playlist/0mbH27y41OCCrqrNLdcqxa?si=bd21705dc61c435e&pt=1ef58d22f663a77644dc5d0976725272" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Agregar Canciones</a>
         </section>
 
         <!-- Galería -->
         <section class="section-block bg-white">
-            <div class="animate-up">
-                <div class="info-title">Momentos</div>
-                <div class="info-data">Galería en Vivo</div>
-                <p class="body-serif" style="margin: 20px auto; font-size: 19px;">
-                    Captura la magia de esta noche. Comparte todas las fotos y videos que tomes directamente en nuestro álbum digital.<br><br>
-                    <span style="font-size: 16px; font-family: 'Montserrat', sans-serif; font-style: normal; color: var(--text-muted);">
-                        Te sugerimos tener instalada la app de <strong>Google Drive</strong> para subir tus archivos fácilmente.
-                    </span>
-                </p>
-                <a href="https://drive.google.com/drive/folders/1_sh2O7zCF_WgMS6WuNCKJLqGWRJTYsUE?usp=sharing" target="_blank" class="btn-solid">Subir mis Fotos</a>
-            </div>
+            <div class="anim-element anim-slide-right delay-1 info-title">Momentos</div>
+            <div class="anim-element anim-slide-right delay-2 info-data" style="font-size: 38px;">Galería en Vivo</div>
+            <p class="anim-element anim-slide-right delay-3 body-serif" style="margin: 25px auto;">
+                Captura la magia de esta noche. Comparte todas las fotos y videos que tomes directamente en nuestro álbum digital.<br><br>
+                <span style="font-size: 16px; font-family: 'Montserrat', sans-serif; font-style: normal; font-weight: 600; color: var(--mint-dark);">
+                    Te sugerimos tener instalada la app de <strong style="color: var(--text-dark);">Google Drive</strong> para subir tus archivos fácilmente.
+                </span>
+            </p>
+            <a href="https://drive.google.com/drive/folders/1_sh2O7zCF_WgMS6WuNCKJLqGWRJTYsUE?usp=sharing" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Subir mis Fotos</a>
         </section>
 
         <!-- RSVP y Pases -->
         <section class="section-block bg-pink">
-            <div class="animate-up" style="width: 100%;">
-                
-                <!-- Tarjeta VIP Oculta (Aparece con URL ?p=x) -->
-                <div id="pases-section" style="display: none;">
-                    <div class="info-title">Pase de Acceso</div>
-                    <div class="ticket-card">
-                        <div class="tag-line" style="margin-bottom: 10px;">Boleto VIP</div>
-                        <div class="body-serif" style="font-size: 16px; margin-bottom: 20px;">Pases Asignados</div>
-                        <div id="ticket-count" style="font-family: 'Cinzel', serif; font-size: 50px; color: var(--gold); line-height: 1;">
-                            0
-                        </div>
-                        <div style="font-family: 'Montserrat', sans-serif; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 25px;">
-                            Presenta captura de pantalla al llegar
-                        </div>
+            
+            <!-- Tarjeta VIP Oculta -->
+            <div id="pases-section" style="display: none; width: 100%;">
+                <div class="anim-element anim-fade-up delay-1 info-title">Acceso al Evento</div>
+                <div class="anim-element anim-zoom delay-2 ticket-card">
+                    <div class="tag-line" style="margin-bottom: 15px; color: var(--gold);">Boleto Especial</div>
+                    <div class="body-serif" style="font-size: 18px; margin-bottom: 15px; color: var(--text-dark);">Pases Asignados</div>
+                    <div id="ticket-count" style="font-family: 'Cinzel', serif; font-size: 65px; font-weight: 700; color: var(--mint-dark); line-height: 1; text-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        0
                     </div>
-                    <div class="line-horizontal" style="margin: 50px auto;"></div>
+                    <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--pink-dark); margin-top: 30px;">
+                        Muestra esta pantalla al llegar
+                    </div>
                 </div>
-
-                <!-- Formulario RSVP (Sin preguntar cantidad) -->
-                <div class="info-title">RSVP</div>
-                <div class="info-data">Confirmar Asistencia</div>
-                <p class="body-serif" style="margin: 15px auto 30px auto; font-size: 18px;">
-                    Agradeceremos tu confirmación lo antes posible.
-                </p>
-                
-                <div class="form-group">
-                    <input type="text" id="rsvp-name" class="input-line" placeholder="Escribe tu nombre y apellido">
-                </div>
-                <div class="form-group">
-                    <select id="rsvp-status" class="input-line">
-                        <option value="" disabled selected>¿Nos acompañarás?</option>
-                        <option value="yes">Con gusto asistiré</option>
-                        <option value="no">No me será posible asistir</option>
-                    </select>
-                </div>
-                <button onclick="sendRSVP()" class="btn-solid" style="margin-bottom: 50px;">Confirmar</button>
-
-                <div class="line-divider"></div>
-
-                <div class="info-title">Mensajes</div>
-                <div class="info-data">Muro de los Deseos</div>
-                <div class="form-group">
-                    <input type="text" id="wish-name" class="input-line" placeholder="De parte de...">
-                </div>
-                <div class="form-group">
-                    <textarea id="wish-message" class="input-line" placeholder="Deja un lindo mensaje para Liz Gissele..."></textarea>
-                </div>
-                <button onclick="sendWish()" class="btn-solid">Enviar Mensaje</button>
-                
+                <div class="anim-element anim-fade-up line-horizontal" style="margin: 60px auto; background-color: #fff;"></div>
             </div>
+
+            <!-- Formulario RSVP -->
+            <div class="anim-element anim-slide-right delay-1 info-title">RSVP</div>
+            <div class="anim-element anim-slide-right delay-2 info-data" style="font-size: 38px;">Confirmar Asistencia</div>
+            <p class="anim-element anim-slide-right delay-3 body-serif" style="margin: 15px auto 40px auto;">
+                Agradeceremos tu confirmación lo antes posible.
+            </p>
+            
+            <div class="anim-element anim-fade-up delay-4 form-group">
+                <input type="text" id="rsvp-name" class="input-line" placeholder="Escribe tu nombre y apellido">
+            </div>
+            <div class="anim-element anim-fade-up delay-4 form-group">
+                <select id="rsvp-status" class="input-line">
+                    <option value="" disabled selected>¿Nos acompañarás?</option>
+                    <option value="yes">Con gusto asistiré</option>
+                    <option value="no">No me será posible asistir</option>
+                </select>
+            </div>
+            <button onclick="sendRSVP()" class="anim-element anim-fade-up delay-4 btn-solid" style="margin-bottom: 60px;">Confirmar por WhatsApp</button>
+
+            <div class="anim-element anim-zoom line-divider" style="background-color: #fff; margin-bottom: 50px;"></div>
+
+            <!-- Muro de Deseos -->
+            <div class="anim-element anim-slide-right delay-1 info-title">Mensajes</div>
+            <div class="anim-element anim-slide-right delay-2 info-data" style="font-size: 38px;">Muro de los Deseos</div>
+            <div class="anim-element anim-fade-up delay-3 form-group" style="margin-top: 30px;">
+                <input type="text" id="wish-name" class="input-line" placeholder="De parte de...">
+            </div>
+            <div class="anim-element anim-fade-up delay-4 form-group">
+                <textarea id="wish-message" class="input-line" placeholder="Deja un lindo mensaje para Liz Gissele..."></textarea>
+            </div>
+            <button onclick="sendWish()" class="anim-element anim-fade-up delay-4 btn-solid">Enviar Mensaje</button>
+            
         </section>
 
     </main>
 
     <script>
-        // Animación Inicial del Sobre
+        // 1. Animación Inicial del Sobre
         function openEnvelope() {
             const wrapper = document.querySelector('.envelope-wrapper');
             const screen = document.getElementById('envelope-screen');
@@ -500,21 +523,29 @@
             }, 1000);
         }
 
-        // Animación de Secciones al hacer Scroll
+        // 2. Intersection Observer (Animaciones Escalonadas On-Scroll)
         document.addEventListener("DOMContentLoaded", () => {
-            const observer = new IntersectionObserver((entries) => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Se activa cuando el 15% del elemento es visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        // Añade la clase in-view para disparar la animación CSS
                         entry.target.classList.add('in-view');
+                        // Deja de observar para que la animación solo ocurra una vez
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.1 });
+            }, observerOptions);
 
-            document.querySelectorAll('.animate-up').forEach(el => observer.observe(el));
+            document.querySelectorAll('.anim-element').forEach(el => observer.observe(el));
         });
 
-        // Lógica del Sistema de Pases (Invytia)
+        // 3. Lógica del Sistema de Pases (Invytia)
         let pasesAsignados = 0;
         const urlParams = new URLSearchParams(window.location.search);
         let parametroPases = urlParams.get('p') || urlParams.get('pases');
@@ -530,7 +561,7 @@
 
         const PHONE_NUMBER = "528111897716";
 
-        // Envío de Asistencia (Sin solicitar número de personas)
+        // 4. Envío de Asistencia a WhatsApp
         function sendRSVP() {
             const name = document.getElementById("rsvp-name").value.trim();
             const status = document.getElementById("rsvp-status").value;
@@ -549,7 +580,7 @@
             window.open(`https://wa.me/${PHONE_NUMBER}?text=${message}`, '_blank');
         }
 
-        // Envío de Mensaje de Deseos
+        // 5. Envío de Mensaje de Deseos a WhatsApp
         function sendWish() {
             const name = document.getElementById("wish-name").value.trim();
             const wish = document.getElementById("wish-message").value.trim();
