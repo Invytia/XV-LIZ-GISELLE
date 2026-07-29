@@ -7,11 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Montserrat:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta Editorial Minimalista (Tonos más frescos y luminosos) */
+            /* Paleta Editorial Minimalista */
             --bg-pearl: #FCFBF8;       /* Blanco roto / Marfil más luminoso */
-            --mint-subtle: #DDF1E6;    /* Menta fresco y suave, sin gris */
+            --mint-subtle: #DDF1E6;    /* Menta fresco y suave */
             --pink-subtle: #FAEAEC;    /* Rosa rubor muy sutil y cálido */
-            --gold-editorial: #CDA766; /* Dorado con un poco más de vida y calidez */
+            --gold-editorial: #CDA766; /* Dorado con vida y calidez */
             --text-dark: #2A2A2A;      /* Gris oscuro profundo para lectura elegante */
             --text-muted: #6B6B6B;
             --black-theme: #161616;
@@ -34,10 +34,50 @@
             scroll-behavior: smooth;
         }
 
-        /* --- SOBRE EDITORIAL Y MINIMALISTA --- */
+        /* --- REPRODUCTOR DE MÚSICA (STICKY) --- */
+        .sticky-music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--gold-editorial);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(205, 167, 102, 0.4);
+            z-index: 2000;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.9);
+            transition: all 0.6s var(--transition-smooth);
+            border: none;
+            outline: none;
+        }
+
+        body.content-active .sticky-music-btn {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .sticky-music-btn:hover {
+            transform: scale(1.1);
+            background-color: #b59052;
+        }
+
+        .sticky-music-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: #fff;
+        }
+
+        /* --- SOBRE EDITORIAL (Menta ultraligero) --- */
         #envelope-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-pearl); /* Se integra con el fondo base */
+            background-color: var(--bg-pearl); 
             z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 1.2s ease-in-out, visibility 1.2s;
         }
@@ -67,7 +107,7 @@
         
         .envelope-wrapper:hover { transform: translateY(-8px); }
 
-        /* Sobre de papel fino */
+        /* Estructura del Sobre en tonos menta ultraligeros */
         .envelope {
             position: relative; width: 320px; height: 210px;
             background-color: #FFFFFF; border-radius: 2px;
@@ -77,20 +117,20 @@
 
         .envelope::before {
             content: ''; position: absolute; top: 0; right: 0;
-            border-right: 160px solid #F5F5F5; border-top: 105px solid transparent;
-            border-bottom: 105px solid #F5F5F5; z-index: 2;
+            border-right: 160px solid #e5f5ec; border-top: 105px solid transparent;
+            border-bottom: 105px solid #e5f5ec; z-index: 2;
         }
         
         .envelope::after {
             content: ''; position: absolute; top: 0; left: 0;
-            border-left: 160px solid #FAFAFA; border-top: 105px solid transparent;
-            border-bottom: 105px solid #FAFAFA; z-index: 2;
+            border-left: 160px solid #edfbf3; border-top: 105px solid transparent;
+            border-bottom: 105px solid #edfbf3; z-index: 2;
         }
 
         .front-flap {
             position: absolute; top: 0; left: 0;
             border-left: 160px solid transparent; border-right: 160px solid transparent;
-            border-top: 115px solid #EFEFEF; transform-origin: top;
+            border-top: 115px solid #dcece3; transform-origin: top;
             transition: transform 0.9s var(--transition-smooth); z-index: 4;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.04));
         }
@@ -174,14 +214,14 @@
         .line-divider { width: 1px; height: 60px; background-color: var(--gold-editorial); margin: 35px auto; }
         .line-horizontal { width: 60px; height: 1px; background-color: var(--gold-editorial); margin: 40px auto; }
 
-        /* Imágenes (Marco Editorial) */
+        /* Imágenes sin bordes toscos */
         .photo-frame {
-            width: 100%; max-width: 420px; margin: 40px auto; /* auto para centrar */
+            width: 100%; max-width: 420px; margin: 40px auto;
             box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-radius: 2px;
-            overflow: hidden; border: 5px solid #FFFFFF; /* Efecto Passepartout */
+            overflow: hidden; border: 5px solid #FFFFFF;
         }
         .bg-black .photo-frame {
-            border-color: #222222; /* Borde oscuro para la sección negra */
+            border-color: #222222;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
         .photo-frame img { width: 100%; display: block; filter: contrast(1.05) saturate(0.95); transition: transform 0.6s ease; }
@@ -275,7 +315,6 @@
             border: 1px solid rgba(0,0,0,0.03);
         }
 
-        /* Cortes laterales simulando boleto */
         .ticket-card::before, .ticket-card::after {
             content: ''; position: absolute; top: 50%; transform: translateY(-50%);
             width: 24px; height: 24px; background-color: var(--pink-subtle); border-radius: 50%;
@@ -298,7 +337,16 @@
 </head>
 <body>
 
-    <!-- PANTALLA INICIAL DEL SOBRE (Integrado y Minimalista) -->
+    <!-- AUDIO OCULTO -->
+    <audio id="bg-music" src="assets/song.mp3" loop></audio>
+
+    <!-- BOTÓN STICKY DE MÚSICA -->
+    <button id="music-btn" class="sticky-music-btn" onclick="toggleMusic()" aria-label="Controlar música">
+        <svg id="music-icon-play" style="display:none;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="music-icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+
+    <!-- PANTALLA INICIAL DEL SOBRE -->
     <div id="envelope-screen">
         <div class="envelope-text-container">
             <div class="env-tag">Mis XV Años</div>
@@ -308,7 +356,6 @@
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="front-flap"></div>
             <div class="wax-seal">
-                <!-- Icono minimalista de flor/sello -->
                 <svg viewBox="0 0 24 24"><path d="M12 2L15 9H22L16.5 13.5L18.5 21L12 17L5.5 21L7.5 13.5L2 9H9L12 2Z"/></svg>
             </div>
             <div class="envelope"></div>
@@ -333,7 +380,7 @@
             </div>
         </section>
 
-        <!-- Fecha y Calendario (Septiembre 2026) -->
+        <!-- Fecha y Calendario (Foto 5) -->
         <section class="section-block bg-mint">
             <div class="anim-element anim-fade-up delay-1 info-title">Celebremos el</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 40px; font-weight: 500;">11 de Septiembre</div>
@@ -354,9 +401,13 @@
             </div>
 
             <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+A%C3%B1os+de+Liz+Gissele&dates=20260911T230000Z/20260912T070000Z&details=Celebremos+juntos+este+d%C3%ADa+tan+especial" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Agendar Evento</a>
+
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 70px;">
+                <img src="assets/foto5.jpg" alt="Sesión" onerror="this.style.display='none'">
+            </div>
         </section>
 
-        <!-- Familia y Foto 2 -->
+        <!-- Familia (Foto 2) -->
         <section class="section-block bg-pearl">
             <div class="anim-element anim-fade-up delay-1 info-title">Con el amor de mis padres</div>
             <div class="anim-element anim-fade-up delay-2 info-data">Jackeline Gissele Beltrán González</div>
@@ -369,12 +420,12 @@
             <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 28px;">Karla Hidalgo y Edgar Beltrán</div>
             <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 28px;">Brenda Beltrán y Miguel Morales</div>
 
-            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 60px;">
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 70px;">
                 <img src="assets/foto2.jpg" alt="Familia" onerror="this.style.display='none'">
             </div>
         </section>
 
-        <!-- Ubicaciones -->
+        <!-- Ubicaciones (Foto 6) -->
         <section class="section-block bg-pink">
             <div class="anim-element anim-fade-up delay-1 info-title">Ceremonia Religiosa</div>
             <div class="anim-element anim-fade-up delay-2 info-data">Parroquia San Jerónimo</div>
@@ -395,9 +446,13 @@
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.02882735267!2d-100.34333529999999!3d25.6703391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662be03c5afd347%3A0xaa2a8120f2fae847!2sCapitolio!5e0!3m2!1ses-419!2smx!4v1785287167843!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
             <a href="https://maps.app.goo.gl/iziyjCoH5wsyaYW6A?g_st=ic" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Ver Ubicación</a>
+
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 70px;">
+                <img src="assets/foto6.jpg" alt="Momentos" onerror="this.style.display='none'">
+            </div>
         </section>
 
-        <!-- Dress Code y Foto 3 -->
+        <!-- Dress Code (Foto 3) -->
         <section class="section-block bg-black">
             <div class="anim-element anim-fade-up delay-1 info-title">Dress Code</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-family: 'Cinzel', serif; font-size: 40px; margin: 25px 0; letter-spacing: 5px; color: #fff;">
@@ -408,12 +463,12 @@
                 Para mantener la elegancia de la noche, se solicita amablemente asistir exclusivamente vistiendo de color negro.
             </p>
 
-            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 60px;">
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 70px;">
                 <img src="assets/foto3.jpg" alt="Dress Code" onerror="this.style.display='none'">
             </div>
         </section>
 
-        <!-- Mesa de Regalos -->
+        <!-- Mesa de Regalos (Foto 7) -->
         <section class="section-block bg-pearl">
             <div class="anim-element anim-fade-up delay-1 info-title">Mesa de Regalos</div>
             <svg class="anim-element anim-zoom delay-2" viewBox="0 0 24 24" style="width: 45px; height: 45px; fill: var(--gold-editorial); margin: 20px 0;">
@@ -423,9 +478,13 @@
             <p class="anim-element anim-fade-up delay-4 body-serif" style="margin-top: 20px; font-size: 20px;">
                 El obsequio más hermoso es tu presencia. Si deseas tener un detalle adicional, habrá un buzón en la recepción para tu obsequio en efectivo.
             </p>
+
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 70px;">
+                <img src="assets/foto7.jpg" alt="Regalos" onerror="this.style.display='none'">
+            </div>
         </section>
 
-        <!-- Playlist -->
+        <!-- Playlist (Foto 8) -->
         <section class="section-block bg-mint">
             <div class="anim-element anim-fade-up delay-1 info-title">Música</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 34px;">Nuestra Playlist</div>
@@ -438,9 +497,13 @@
             </div>
             
             <a href="https://open.spotify.com/playlist/0mbH27y41OCCrqrNLdcqxa?si=bd21705dc61c435e&pt=1ef58d22f663a77644dc5d0976725272" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Agregar Canciones</a>
+
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 70px;">
+                <img src="assets/foto8.jpg" alt="Fiesta" onerror="this.style.display='none'">
+            </div>
         </section>
 
-        <!-- Galería y Foto 4 -->
+        <!-- Galería (Foto 4) -->
         <section class="section-block bg-pearl">
             <div class="anim-element anim-fade-up delay-1 info-title">Momentos</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 34px;">Galería en Vivo</div>
@@ -457,9 +520,14 @@
             </div>
         </section>
 
-        <!-- RSVP y Pases -->
+        <!-- RSVP y Pases (Foto 9 y 10) -->
         <section class="section-block bg-pink">
             
+            <!-- Foto 9 Antes del Formulario -->
+            <div class="anim-element anim-fade-up delay-1 photo-frame" style="margin-bottom: 70px; margin-top: 0;">
+                <img src="assets/foto9.jpg" alt="Detalles" onerror="this.style.display='none'">
+            </div>
+
             <!-- Tarjeta VIP Oculta -->
             <div id="pases-section" style="display: none; width: 100%;">
                 <div class="anim-element anim-fade-up delay-1 info-title">Acceso al Evento</div>
@@ -506,25 +574,62 @@
             <div class="anim-element anim-fade-up delay-4 form-group">
                 <textarea id="wish-message" class="input-line" placeholder="Deja un lindo mensaje para Liz Gissele..."></textarea>
             </div>
-            <button onclick="sendWish()" class="anim-element anim-fade-up delay-4 btn-solid">Enviar Mensaje</button>
+            <button onclick="sendWish()" class="anim-element anim-fade-up delay-4 btn-solid" style="margin-bottom: 70px;">Enviar Mensaje</button>
+
+            <!-- Foto 10 Despedida -->
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-bottom: 0;">
+                <img src="assets/foto10.jpg" alt="Despedida" onerror="this.style.display='none'">
+            </div>
             
         </section>
 
     </main>
 
     <script>
-        // 1. Animación Inicial del Sobre
+        // --- CONTROL DE AUDIO ---
+        let isMusicPlaying = false;
+        const bgMusic = document.getElementById('bg-music');
+        const playIcon = document.getElementById('music-icon-play');
+        const pauseIcon = document.getElementById('music-icon-pause');
+
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            } else {
+                bgMusic.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        // --- ANIMACIÓN INICIAL DEL SOBRE ---
         function openEnvelope() {
             const wrapper = document.querySelector('.envelope-wrapper');
             const screen = document.getElementById('envelope-screen');
             wrapper.classList.add('open');
+            
             setTimeout(() => {
                 screen.classList.add('fade-out');
                 document.body.classList.add('content-active');
+                
+                // Intento de reproducir la música al entrar
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                }).catch(e => {
+                    console.log("El navegador bloqueó el autoplay de audio.");
+                    isMusicPlaying = false;
+                    playIcon.style.display = 'block';
+                    pauseIcon.style.display = 'none';
+                });
             }, 1000);
         }
 
-        // 2. Intersection Observer (Animaciones On-Scroll)
+        // --- INTERSECTION OBSERVER (Animaciones On-Scroll) ---
         document.addEventListener("DOMContentLoaded", () => {
             const observerOptions = {
                 root: null,
@@ -544,7 +649,7 @@
             document.querySelectorAll('.anim-element').forEach(el => observer.observe(el));
         });
 
-        // 3. Lógica del Sistema de Pases 
+        // --- LÓGICA DEL SISTEMA DE PASES ---
         let pasesAsignados = 0;
         const urlParams = new URLSearchParams(window.location.search);
         let parametroPases = urlParams.get('p') || urlParams.get('pases');
@@ -560,7 +665,7 @@
 
         const PHONE_NUMBER = "528111897716";
 
-        // 4. Envío de Asistencia a WhatsApp
+        // --- ENVÍO DE ASISTENCIA A WHATSAPP ---
         function sendRSVP() {
             const name = document.getElementById("rsvp-name").value.trim();
             const status = document.getElementById("rsvp-status").value;
@@ -579,7 +684,7 @@
             window.open(`https://wa.me/${PHONE_NUMBER}?text=${message}`, '_blank');
         }
 
-        // 5. Envío de Mensaje de Deseos a WhatsApp
+        // --- ENVÍO DE MENSAJE DE DESEOS A WHATSAPP ---
         function sendWish() {
             const name = document.getElementById("wish-name").value.trim();
             const wish = document.getElementById("wish-message").value.trim();
