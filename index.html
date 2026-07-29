@@ -174,11 +174,15 @@
         .line-divider { width: 1px; height: 60px; background-color: var(--gold-editorial); margin: 35px auto; }
         .line-horizontal { width: 60px; height: 1px; background-color: var(--gold-editorial); margin: 40px auto; }
 
-        /* Imágenes sin bordes toscos */
+        /* Imágenes (Marco Editorial) */
         .photo-frame {
-            width: 100%; max-width: 420px; margin: 40px 0;
+            width: 100%; max-width: 420px; margin: 40px auto; /* auto para centrar */
             box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-radius: 2px;
-            overflow: hidden;
+            overflow: hidden; border: 5px solid #FFFFFF; /* Efecto Passepartout */
+        }
+        .bg-black .photo-frame {
+            border-color: #222222; /* Borde oscuro para la sección negra */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
         .photo-frame img { width: 100%; display: block; filter: contrast(1.05) saturate(0.95); transition: transform 0.6s ease; }
         .photo-frame:hover img { transform: scale(1.03); }
@@ -316,7 +320,7 @@
     <!-- CONTENIDO PRINCIPAL -->
     <main id="main-invitation">
         
-        <!-- Portada -->
+        <!-- Portada (Foto 1) -->
         <section class="section-block bg-pearl">
             <div class="anim-element anim-fade-up delay-1 tag-line">Mis XV Años</div>
             <h1 class="anim-element anim-zoom delay-2 title-script">Liz Gissele</h1>
@@ -352,7 +356,7 @@
             <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+A%C3%B1os+de+Liz+Gissele&dates=20260911T230000Z/20260912T070000Z&details=Celebremos+juntos+este+d%C3%ADa+tan+especial" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Agendar Evento</a>
         </section>
 
-        <!-- Familia -->
+        <!-- Familia y Foto 2 -->
         <section class="section-block bg-pearl">
             <div class="anim-element anim-fade-up delay-1 info-title">Con el amor de mis padres</div>
             <div class="anim-element anim-fade-up delay-2 info-data">Jackeline Gissele Beltrán González</div>
@@ -364,6 +368,10 @@
             <div class="anim-element anim-fade-up delay-4 info-title">Y mis Padrinos</div>
             <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 28px;">Karla Hidalgo y Edgar Beltrán</div>
             <div class="anim-element anim-fade-up delay-4 info-data" style="font-size: 28px;">Brenda Beltrán y Miguel Morales</div>
+
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 60px;">
+                <img src="assets/foto2.jpg" alt="Familia" onerror="this.style.display='none'">
+            </div>
         </section>
 
         <!-- Ubicaciones -->
@@ -389,7 +397,7 @@
             <a href="https://maps.app.goo.gl/iziyjCoH5wsyaYW6A?g_st=ic" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Ver Ubicación</a>
         </section>
 
-        <!-- Dress Code -->
+        <!-- Dress Code y Foto 3 -->
         <section class="section-block bg-black">
             <div class="anim-element anim-fade-up delay-1 info-title">Dress Code</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-family: 'Cinzel', serif; font-size: 40px; margin: 25px 0; letter-spacing: 5px; color: #fff;">
@@ -399,6 +407,10 @@
             <p class="anim-element anim-fade-up delay-4 body-serif" style="color: #999; font-size: 19px;">
                 Para mantener la elegancia de la noche, se solicita amablemente asistir exclusivamente vistiendo de color negro.
             </p>
+
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 60px;">
+                <img src="assets/foto3.jpg" alt="Dress Code" onerror="this.style.display='none'">
+            </div>
         </section>
 
         <!-- Mesa de Regalos -->
@@ -428,7 +440,7 @@
             <a href="https://open.spotify.com/playlist/0mbH27y41OCCrqrNLdcqxa?si=bd21705dc61c435e&pt=1ef58d22f663a77644dc5d0976725272" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Agregar Canciones</a>
         </section>
 
-        <!-- Galería -->
+        <!-- Galería y Foto 4 -->
         <section class="section-block bg-pearl">
             <div class="anim-element anim-fade-up delay-1 info-title">Momentos</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 34px;">Galería en Vivo</div>
@@ -439,6 +451,10 @@
                 </span>
             </p>
             <a href="https://drive.google.com/drive/folders/1_sh2O7zCF_WgMS6WuNCKJLqGWRJTYsUE?usp=sharing" target="_blank" class="anim-element anim-fade-up delay-4 btn-solid">Subir mis Fotos</a>
+
+            <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 70px;">
+                <img src="assets/foto4.jpg" alt="Momentos" onerror="this.style.display='none'">
+            </div>
         </section>
 
         <!-- RSVP y Pases -->
