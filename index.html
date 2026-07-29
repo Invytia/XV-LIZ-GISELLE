@@ -476,8 +476,17 @@
             </svg>
             <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 34px;">Lluvia de Sobres</div>
             <p class="anim-element anim-fade-up delay-4 body-serif" style="margin-top: 20px; font-size: 20px;">
-                El obsequio más hermoso es tu presencia. Si deseas tener un detalle adicional, habrá un buzón en la recepción para tu obsequio en efectivo.
+                El obsequio más hermoso es tu presencia. Si deseas tener un detalle adicional, habrá un buzón en la recepción para tu obsequio en efectivo, o si lo prefieres, puedes realizar una transferencia.
             </p>
+
+            <div class="anim-element anim-fade-up delay-4" style="margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-dark); border: 1px solid rgba(0,0,0,0.05); padding: 30px; border-radius: 2px; background: #fff; max-width: 400px; width: 100%;">
+                <div style="margin-bottom: 15px; text-transform: uppercase; font-size: 13px; color: var(--text-muted); letter-spacing: 2px;">Datos Bancarios</div>
+                <div style="margin-bottom: 10px;"><strong>Banco:</strong> Santander</div>
+                <div style="margin-bottom: 10px;"><strong>Nombre:</strong> Jackeline Beltrán</div>
+                <div style="margin-bottom: 25px;"><strong>CLABE:</strong> 014580567070955053</div>
+                
+                <button onclick="copyCLABE()" class="btn-solid" style="margin-top: 0; padding: 12px 25px; font-size: 11px;">Copiar CLABE</button>
+            </div>
 
             <div class="anim-element anim-fade-up delay-4 photo-frame" style="margin-top: 70px;">
                 <img src="assets/foto7.jpg" alt="Regalos" onerror="this.style.display='none'">
@@ -547,9 +556,17 @@
             <!-- Formulario RSVP -->
             <div class="anim-element anim-fade-up delay-1 info-title">RSVP</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 34px;">Confirmar Asistencia</div>
-            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 15px auto 40px auto; font-size: 20px;">
+            <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 15px auto 25px auto; font-size: 20px;">
                 Agradeceremos tu confirmación lo antes posible.
             </p>
+
+            <!-- AVISO EVENTO ADULTOS -->
+            <div class="anim-element anim-fade-up delay-3" style="margin-bottom: 40px;">
+                <span style="display: block; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-editorial); margin-bottom: 8px;">Evento Exclusivo</span>
+                <span style="display: block; font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--text-muted); line-height: 1.6; max-width: 380px; margin: 0 auto; padding: 0 15px;">
+                    Para disfrutar al máximo de esta velada tan especial, hemos reservado nuestra recepción exclusivamente para adultos. Agradecemos su comprensión.
+                </span>
+            </div>
             
             <div class="anim-element anim-fade-up delay-4 form-group">
                 <input type="text" id="rsvp-name" class="input-line" placeholder="Tu nombre y apellido">
@@ -661,6 +678,17 @@
                 pasesSection.style.display = 'block';
                 document.getElementById('ticket-count').innerText = pasesAsignados;
             }
+        }
+
+        // --- FUNCIÓN PARA COPIAR CLABE ---
+        function copyCLABE() {
+            const clabe = "014580567070955053";
+            navigator.clipboard.writeText(clabe).then(() => {
+                alert("¡CLABE copiada al portapapeles!");
+            }).catch(err => {
+                console.error("Error al copiar: ", err);
+                alert("Hubo un error al copiar la CLABE. Por favor, inténtalo manualmente.");
+            });
         }
 
         const PHONE_NUMBER = "528111897716";
