@@ -7,14 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Montserrat:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta Editorial Minimalista (Tonos Desaturados y Elegantes) */
-            --bg-pearl: #FAF9F6;       /* Blanco roto / Marfil de fondo */
-            --mint-subtle: #E6ECE9;    /* Menta grisáceo muy suave */
-            --pink-subtle: #F2E9E9;    /* Rosa polvo/viejo sutil */
-            --gold-editorial: #C2A878; /* Dorado champaña elegante, no chillón */
-            --text-dark: #2D2D2D;      /* Gris casi negro para contraste */
-            --text-muted: #737373;
-            --black-theme: #1C1C1C;
+            /* Paleta Editorial Minimalista (Tonos más frescos y luminosos) */
+            --bg-pearl: #FCFBF8;       /* Blanco roto / Marfil más luminoso */
+            --mint-subtle: #DDF1E6;    /* Menta fresco y suave, sin gris */
+            --pink-subtle: #FAEAEC;    /* Rosa rubor muy sutil y cálido */
+            --gold-editorial: #CDA766; /* Dorado con un poco más de vida y calidez */
+            --text-dark: #2A2A2A;      /* Gris oscuro profundo para lectura elegante */
+            --text-muted: #6B6B6B;
+            --black-theme: #161616;
             
             --transition-smooth: cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -101,7 +101,7 @@
             position: absolute; top: 90px; left: 50%; transform: translateX(-50%);
             width: 45px; height: 45px; background-color: var(--gold-editorial);
             border-radius: 50%; z-index: 5; display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 15px rgba(194, 168, 120, 0.3); 
+            box-shadow: 0 4px 15px rgba(205, 167, 102, 0.35); 
             transition: opacity 0.5s ease 0.1s, transform 0.5s ease;
         }
         
@@ -205,7 +205,7 @@
             transition: all 0.4s ease; margin-top: 30px;
         }
         
-        .btn-solid:hover { background-color: #a89163; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(194, 168, 120, 0.2); }
+        .btn-solid:hover { background-color: #b59052; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(205, 167, 102, 0.25); }
 
         /* Widget de Calendario Editorial (Septiembre 2026) */
         .calendar-wrapper {
@@ -237,7 +237,7 @@
 
         .cal-day.active {
             background-color: var(--gold-editorial); color: #fff; border-radius: 50%; 
-            font-weight: 500; box-shadow: 0 4px 12px rgba(194, 168, 120, 0.3);
+            font-weight: 500; box-shadow: 0 4px 12px rgba(205, 167, 102, 0.35);
         }
 
         /* Mapas */
@@ -246,7 +246,7 @@
             overflow: hidden; border-radius: 2px; box-shadow: 0 15px 40px rgba(0,0,0,0.05);
         }
         
-        .map-box iframe { width: 100%; height: 100%; border: none; filter: grayscale(20%) contrast(1.1); }
+        .map-box iframe { width: 100%; height: 100%; border: none; filter: grayscale(10%) contrast(1.05); }
 
         /* Formularios RSVP Finos */
         .form-group { width: 100%; max-width: 400px; margin: 0 auto 20px auto; }
