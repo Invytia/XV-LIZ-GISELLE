@@ -309,6 +309,7 @@
         }
         .input-line:focus { border-bottom-color: var(--gold-editorial); }
         .input-line::placeholder { color: #A0A0A0; font-style: normal; }
+        .input-line:disabled { color: var(--gold-editorial); background-color: rgba(255,255,255,0.4); cursor: not-allowed; font-weight: 500; }
         
         textarea.input-line { resize: vertical; min-height: 90px; }
         select.input-line { appearance: none; text-align-last: center; cursor: pointer; }
@@ -624,6 +625,15 @@
                     <option value="no">No me será posible asistir</option>
                 </select>
             </div>
+            
+            <!-- Campo dinámico de cantidad de pases -->
+            <div class="anim-element anim-fade-up delay-4 form-group">
+                <select id="rsvp-guests" class="input-line" style="display: none;">
+                    <option value="" disabled selected>¿Cuántas personas asisten?</option>
+                    <!-- Las opciones se generarán dinámicamente con JS -->
+                </select>
+            </div>
+            
             <button onclick="sendRSVP()" class="anim-element anim-fade-up delay-4 btn-solid" style="margin-bottom: 70px;">Confirmar por WhatsApp</button>
 
             <div class="anim-element anim-zoom line-divider"></div>
@@ -716,7 +726,7 @@
         let nombreInvitado = "Invitado Especial";
         const urlParams = new URLSearchParams(window.location.search);
         
-        // Base de datos de invitados mapeada de la lista oficial[cite: 1]
+        // Base de datos de invitados
         const dbInvitados = {
             "1": { nombre: "Fam Beltrán González", pases: 2 },
             "2": { nombre: "Fam Beltrán Hidalgo", pases: 5 },
@@ -780,11 +790,20 @@
         if (parametroId && dbInvitados[parametroId]) {
             pasesAsignados = dbInvitados[parametroId].pases;
             nombreInvitado = dbInvitados[parametroId].nombre;
+            
+            // Autocompletar el campo de nombre para mayor comodidad y bloquearlo sutilmente
+            const inputName = document.getElementById("rsvp-name");
+            inputName.value = nombreInvitado;
+            inputName.disabled = true; // Lo hace de solo lectura pero elegante
         } else if (parametroPases && !isNaN(parametroPases)) {
             pasesAsignados = parseInt(parametroPases);
+        } else {
+            // Valor por defecto (Fallback) si no se usa ID
+            pasesAsignados = 10; 
         }
 
-        if (pasesAsignados > 0) {
+        // Mostrar boleto VIP si hay pases
+        if (pasesAsignados > 0 && parametroId) {
             const pasesSection = document.getElementById('pases-section');
             if (pasesSection) {
                 pasesSection.style.display = 'block';
@@ -793,6 +812,24 @@
                 if (nameEl) nameEl.innerText = nombreInvitado;
             }
         }
+
+        // Mostrar u ocultar el dropdown de cantidad de invitados según la respuesta
+        const rsvpStatus = document.getElementById("rsvp-status");
+        const rsvpGuests = document.getElementById("rsvp-guests");
+
+        rsvpStatus.addEventListener('change', (e) => {
+            if(e.target.value === 'yes') {
+                rsvpGuests.style.display = 'block';
+                // Llenar el selector de invitados dinámicamente
+                rsvpGuests.innerHTML = '<option value="" disabled selected>¿Cuántas personas asisten?</option>';
+                for(let i = 1; i <= pasesAsignados; i++) {
+                    rsvpGuests.innerHTML += `<option value="${i}">${i} persona${i > 1 ? 's' : ''}</option>`;
+                }
+            } else {
+                rsvpGuests.style.display = 'none';
+                rsvpGuests.value = ""; // Reset
+            }
+        });
 
         // --- FUNCIÓN PARA COPIAR CLABE ---
         function copyCLABE() {
@@ -811,15 +848,21 @@
         function sendRSVP() {
             const name = document.getElementById("rsvp-name").value.trim();
             const status = document.getElementById("rsvp-status").value;
+            const guests = document.getElementById("rsvp-guests").value;
             
             if (name === "" || status === "") {
-                alert("Por favor, ingresa tu nombre y selecciona una opción de asistencia.");
+                alert("Por favor, selecciona una opción de asistencia.");
+                return;
+            }
+
+            if (status === "yes" && guests === "") {
+                alert("Por favor, indica cuántas personas asistirán.");
                 return;
             }
 
             let message = "";
             if (status === "yes") {
-                message = encodeURIComponent(`¡Hola! Soy ${name}. Sí, confirmo con gusto mi asistencia a los XV años de Liz Gissele.`);
+                message = encodeURIComponent(`¡Hola! Soy ${name}. Sí, confirmo con gusto mi asistencia a los XV años de Liz Gissele. Seremos ${guests} persona(s) en total.`);
             } else {
                 message = encodeURIComponent(`¡Hola! Soy ${name}. Lamentablemente no me será posible asistir a los XV años de Liz Gissele. Agradezco mucho la invitación.`);
             }
