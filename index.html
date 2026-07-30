@@ -89,6 +89,8 @@
         .envelope-text-container {
             text-align: center; margin-bottom: 50px;
             animation: floatText 4s ease-in-out infinite;
+            position: relative;
+            z-index: 10;
         }
 
         .env-tag {
@@ -103,6 +105,7 @@
 
         .envelope-wrapper {
             position: relative; cursor: pointer; transition: transform 0.6s var(--transition-smooth);
+            z-index: 10;
         }
         
         .envelope-wrapper:hover { transform: translateY(-8px); }
@@ -168,7 +171,7 @@
         @keyframes fadeInMain { to { opacity: 1; } }
 
         /* Clases de Animación */
-        .anim-element { opacity: 0; transition: all 1.2s var(--transition-smooth); }
+        .anim-element { opacity: 0; transition: all 1.2s var(--transition-smooth); position: relative; z-index: 2; }
         
         .anim-fade-up { transform: translateY(40px); }
         .anim-fade-up.in-view { opacity: 1; transform: translateY(0); }
@@ -185,12 +188,24 @@
         /* Estructura de Secciones Minimalistas */
         .section-block {
             width: 100%; padding: 110px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;
+            position: relative; overflow: hidden; /* Para contener las flores */
         }
 
         .bg-pearl { background-color: var(--bg-pearl); }
         .bg-mint { background-color: var(--mint-subtle); }
         .bg-pink { background-color: var(--pink-subtle); }
         .bg-black { background-color: var(--black-theme); color: #ffffff; }
+
+        /* DECORACIONES FLORALES */
+        .floral-img {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0; /* Detrás del texto */
+            opacity: 0.85;
+            max-width: 180px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05));
+            transition: opacity 1.5s ease;
+        }
 
         /* Tipografía Editorial */
         .tag-line {
@@ -218,7 +233,7 @@
         .photo-frame {
             width: 100%; max-width: 420px; margin: 40px auto;
             box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-radius: 2px;
-            overflow: hidden; border: 5px solid #FFFFFF;
+            overflow: hidden; border: 5px solid #FFFFFF; position: relative; z-index: 2;
         }
         .bg-black .photo-frame {
             border-color: #222222;
@@ -229,7 +244,7 @@
 
         /* Información Textual */
         .info-title {
-            font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 4px;
+            font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 3px; line-height: 1.4;
             text-transform: uppercase; color: var(--gold-editorial); margin-bottom: 12px; font-weight: 500;
         }
 
@@ -246,7 +261,7 @@
             padding: 17px 35px; font-family: 'Montserrat', sans-serif; font-size: 12px;
             font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
             text-decoration: none; border: none; cursor: pointer; border-radius: 2px;
-            transition: all 0.4s ease; margin-top: 30px;
+            transition: all 0.4s ease; margin-top: 30px; position: relative; z-index: 5;
         }
         
         .btn-solid:hover { background-color: #b59052; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(205, 167, 102, 0.25); }
@@ -255,7 +270,7 @@
         .calendar-wrapper {
             width: 100%; max-width: 340px; margin: 40px auto; padding: 35px 25px;
             background: #fff; border-radius: 2px; box-shadow: 0 15px 45px rgba(0,0,0,0.04);
-            box-sizing: border-box; border: 1px solid rgba(0,0,0,0.03);
+            box-sizing: border-box; border: 1px solid rgba(0,0,0,0.03); position: relative; z-index: 2;
         }
 
         .calendar-month {
@@ -287,13 +302,13 @@
         /* Mapas */
         .map-box {
             width: 100%; max-width: 550px; height: 320px; margin: 30px auto;
-            overflow: hidden; border-radius: 2px; box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+            overflow: hidden; border-radius: 2px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); position: relative; z-index: 2;
         }
         
         .map-box iframe { width: 100%; height: 100%; border: none; filter: grayscale(10%) contrast(1.05); }
 
         /* Formularios RSVP Finos */
-        .form-group { width: 100%; max-width: 400px; margin: 0 auto 20px auto; }
+        .form-group { width: 100%; max-width: 400px; margin: 0 auto 20px auto; position: relative; z-index: 2; }
         
         .input-line {
             width: 100%; padding: 18px 0; background: transparent; border: none;
@@ -312,7 +327,7 @@
             width: 100%; max-width: 340px; margin: 30px auto; background-color: #fff;
             padding: 45px 25px; position: relative; text-align: center;
             border-radius: 2px; box-shadow: 0 15px 40px rgba(0,0,0,0.04);
-            border: 1px solid rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.03); z-index: 2;
         }
 
         .ticket-card::before, .ticket-card::after {
@@ -332,6 +347,7 @@
             .envelope { width: 300px; height: 195px; }
             .envelope::before, .envelope::after { border-left-width: 150px; border-right-width: 150px; border-top-width: 97px; border-bottom-width: 97px; }
             .front-flap { border-left-width: 150px; border-right-width: 150px; border-top-width: 105px; }
+            .floral-img { max-width: 110px; } /* Flores más chicas en móvil */
         }
     </style>
 </head>
@@ -348,6 +364,10 @@
 
     <!-- PANTALLA INICIAL DEL SOBRE -->
     <div id="envelope-screen">
+        <!-- Flor decorativa sutil en el fondo del sobre -->
+        <img src="assets/menta.png" style="position: absolute; top: -20px; right: -20px; width: 180px; opacity: 0.4; transform: rotate(-15deg); pointer-events: none;" alt="">
+        <img src="assets/rosa.png" style="position: absolute; bottom: -20px; left: -20px; width: 180px; opacity: 0.4; transform: rotate(15deg); pointer-events: none;" alt="">
+
         <div class="envelope-text-container">
             <div class="env-tag">Mis XV Años</div>
             <h1 class="env-title">Liz Gissele</h1>
@@ -361,7 +381,7 @@
             <div class="envelope"></div>
         </div>
         
-        <div class="hint-text">Tocar para abrir</div>
+        <div class="hint-text" style="position: relative; z-index: 10;">Tocar para abrir</div>
     </div>
 
     <!-- CONTENIDO PRINCIPAL -->
@@ -369,6 +389,10 @@
         
         <!-- Portada (Foto 1) -->
         <section class="section-block bg-pearl">
+            <!-- Flores de decoración -->
+            <img src="assets/menta1.png" class="floral-img anim-element anim-zoom delay-1" style="top: -20px; left: -30px; transform: rotate(15deg);" alt="">
+            <img src="assets/rosa.png" class="floral-img anim-element anim-zoom delay-2" style="bottom: 50px; right: -30px; transform: rotate(-20deg);" alt="">
+
             <div class="anim-element anim-fade-up delay-1 tag-line">Mis XV Años</div>
             <h1 class="anim-element anim-zoom delay-2 title-script">Liz Gissele</h1>
             <div class="anim-element anim-fade-up delay-3 line-divider"></div>
@@ -382,7 +406,10 @@
 
         <!-- Fecha y Calendario (Foto 5) -->
         <section class="section-block bg-mint">
-            <div class="anim-element anim-fade-up delay-1 info-title">Celebremos el</div>
+            <!-- Flor decorativa -->
+            <img src="assets/rosa1.png" class="floral-img anim-element anim-zoom delay-2" style="top: 20%; right: -20px; transform: rotate(-35deg);" alt="">
+
+            <div class="anim-element anim-fade-up delay-1 info-title" style="letter-spacing: 2px;">Será un honor contar con tu presencia el</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 40px; font-weight: 500;">11 de Septiembre</div>
             <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 24px; color: var(--gold-editorial); letter-spacing: 2px;">2026</div>
 
@@ -409,6 +436,9 @@
 
         <!-- Familia (Foto 2) -->
         <section class="section-block bg-pearl">
+            <!-- Flor decorativa -->
+            <img src="assets/menta.png" class="floral-img anim-element anim-zoom delay-1" style="bottom: 10%; left: -30px; transform: rotate(20deg);" alt="">
+
             <div class="anim-element anim-fade-up delay-1 info-title">Con el amor de mis padres</div>
             <div class="anim-element anim-fade-up delay-2 info-data">Jackeline Gissele Beltrán González</div>
             <div class="anim-element anim-fade-up delay-3" style="font-family: 'Cinzel', serif; font-size: 20px; color: var(--gold-editorial); margin: 15px 0;">&</div>
@@ -427,6 +457,10 @@
 
         <!-- Ubicaciones (Foto 6) -->
         <section class="section-block bg-pink">
+            <!-- Flores decorativas -->
+            <img src="assets/menta1.png" class="floral-img anim-element anim-zoom delay-1" style="top: 5%; left: -20px; transform: rotate(45deg);" alt="">
+            <img src="assets/rosa.png" class="floral-img anim-element anim-zoom delay-3" style="bottom: 30%; right: -25px; transform: rotate(-15deg);" alt="">
+
             <div class="anim-element anim-fade-up delay-1 info-title">Ceremonia Religiosa</div>
             <div class="anim-element anim-fade-up delay-2 info-data">Parroquia San Jerónimo</div>
             <div class="anim-element anim-fade-up delay-3 tag-line" style="font-size: 14px; margin: 15px 0; color: var(--text-muted);">7:00 p.m.</div>
@@ -454,6 +488,7 @@
 
         <!-- Dress Code (Foto 3) -->
         <section class="section-block bg-black">
+            <!-- Sin flores para mantener el estilo Total Black -->
             <div class="anim-element anim-fade-up delay-1 info-title">Dress Code</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-family: 'Cinzel', serif; font-size: 40px; margin: 25px 0; letter-spacing: 5px; color: #fff;">
                 TOTAL BLACK<br>ATTIRE
@@ -470,8 +505,11 @@
 
         <!-- Mesa de Regalos (Foto 7) -->
         <section class="section-block bg-pearl">
+            <!-- Flor decorativa -->
+            <img src="assets/rosa1.png" class="floral-img anim-element anim-zoom delay-1" style="top: 10%; right: -25px; transform: rotate(-30deg);" alt="">
+
             <div class="anim-element anim-fade-up delay-1 info-title">Mesa de Regalos</div>
-            <svg class="anim-element anim-zoom delay-2" viewBox="0 0 24 24" style="width: 45px; height: 45px; fill: var(--gold-editorial); margin: 20px 0;">
+            <svg class="anim-element anim-zoom delay-2" viewBox="0 0 24 24" style="width: 45px; height: 45px; fill: var(--gold-editorial); margin: 20px 0; position: relative; z-index: 2;">
                 <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
             </svg>
             <div class="anim-element anim-fade-up delay-3 info-data" style="font-size: 34px;">Lluvia de Sobres</div>
@@ -479,11 +517,9 @@
                 El obsequio más hermoso es tu presencia. Si deseas tener un detalle adicional, habrá un buzón en la recepción para tu obsequio en efectivo, o si lo prefieres, puedes realizar una transferencia.
             </p>
 
-            <div class="anim-element anim-fade-up delay-4" style="margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-dark); border: 1px solid rgba(0,0,0,0.05); padding: 30px; border-radius: 2px; background: #fff; max-width: 400px; width: 100%;">
+            <div class="anim-element anim-fade-up delay-4" style="margin-top: 30px; font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-dark); border: 1px solid rgba(0,0,0,0.05); padding: 30px; border-radius: 2px; background: #fff; max-width: 400px; width: 100%; position: relative; z-index: 2;">
                 <div style="margin-bottom: 15px; text-transform: uppercase; font-size: 13px; color: var(--text-muted); letter-spacing: 2px;">Datos Bancarios</div>
-                <div style="margin-bottom: 10px;"><strong>Banco:</strong> Santander</div>
-                <div style="margin-bottom: 10px;"><strong>Nombre:</strong> Jackeline Beltrán</div>
-                <div style="margin-bottom: 25px;"><strong>CLABE:</strong> 014580567070955053</div>
+                <div style="margin-bottom: 25px; font-size: 16px;"><strong>CLABE:</strong> 014580567070955053</div>
                 
                 <button onclick="copyCLABE()" class="btn-solid" style="margin-top: 0; padding: 12px 25px; font-size: 11px;">Copiar CLABE</button>
             </div>
@@ -495,13 +531,16 @@
 
         <!-- Playlist (Foto 8) -->
         <section class="section-block bg-mint">
+            <!-- Flor decorativa -->
+            <img src="assets/rosa.png" class="floral-img anim-element anim-zoom delay-1" style="bottom: 15%; left: -20px; transform: rotate(15deg);" alt="">
+
             <div class="anim-element anim-fade-up delay-1 info-title">Música</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 34px;">Nuestra Playlist</div>
             <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 20px auto 40px auto; font-size: 20px;">
                 Ayúdame a crear el ambiente perfecto agregando tus canciones favoritas para la pista de baile.
             </p>
             
-            <div class="anim-element anim-zoom delay-4" style="width: 100%; max-width: 480px;">
+            <div class="anim-element anim-zoom delay-4" style="width: 100%; max-width: 480px; position: relative; z-index: 2;">
                 <iframe style="border-radius: 2px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05);" src="https://open.spotify.com/embed/playlist/0mbH27y41OCCrqrNLdcqxa?utm_source=generator&si=084ad28c94604d23" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
             
@@ -514,6 +553,9 @@
 
         <!-- Galería (Foto 4) -->
         <section class="section-block bg-pearl">
+            <!-- Flor decorativa -->
+            <img src="assets/menta1.png" class="floral-img anim-element anim-zoom delay-1" style="top: 15%; left: -30px; transform: rotate(35deg);" alt="">
+
             <div class="anim-element anim-fade-up delay-1 info-title">Momentos</div>
             <div class="anim-element anim-fade-up delay-2 info-data" style="font-size: 34px;">Galería en Vivo</div>
             <p class="anim-element anim-fade-up delay-3 body-serif" style="margin: 25px auto; font-size: 20px;">
@@ -531,7 +573,10 @@
 
         <!-- RSVP y Pases (Foto 9 y 10) -->
         <section class="section-block bg-pink">
-            
+            <!-- Flores decorativas -->
+            <img src="assets/menta.png" class="floral-img anim-element anim-zoom delay-1" style="top: -20px; right: -20px; transform: rotate(-10deg);" alt="">
+            <img src="assets/rosa1.png" class="floral-img anim-element anim-zoom delay-4" style="bottom: 10%; left: -30px; transform: rotate(25deg);" alt="">
+
             <!-- Foto 9 Antes del Formulario -->
             <div class="anim-element anim-fade-up delay-1 photo-frame" style="margin-bottom: 70px; margin-top: 0;">
                 <img src="assets/foto9.jpg" alt="Detalles" onerror="this.style.display='none'">
@@ -561,7 +606,7 @@
             </p>
 
             <!-- AVISO EXPLÍCITO EVENTO SIN NIÑOS -->
-            <div class="anim-element anim-fade-up delay-3" style="margin-bottom: 40px; background-color: rgba(0,0,0,0.03); padding: 25px 20px; border-radius: 4px; border: 1px solid rgba(205, 167, 102, 0.3); max-width: 420px; margin-left: auto; margin-right: auto;">
+            <div class="anim-element anim-fade-up delay-3" style="position: relative; z-index: 2; margin-bottom: 40px; background-color: rgba(255,255,255,0.7); padding: 25px 20px; border-radius: 4px; border: 1px solid rgba(205, 167, 102, 0.3); max-width: 420px; margin-left: auto; margin-right: auto;">
                 <span style="display: block; font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 3px; color: var(--text-dark); margin-bottom: 12px;">Recepción Sin Niños</span>
                 <span style="display: block; font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-muted); line-height: 1.6;">
                     Amamos a los más pequeños, pero deseamos que disfruten y celebren con nosotros sin preocupaciones. Por ello, el evento será <strong>ESTRICTAMENTE PARA ADULTOS (NO NIÑOS)</strong>. Agradecemos infinitamente su comprensión y apoyo para respetar esta regla.
